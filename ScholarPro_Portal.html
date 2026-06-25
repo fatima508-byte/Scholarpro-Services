@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScholarPro Services — International Student Portal</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#07080f;min-height:100vh;font-family:'Segoe UI',system-ui,sans-serif;color:#e2e8f0}
+  /* TOPBAR */
+  .topbar{background:rgba(255,255,255,0.03);border-bottom:0.5px solid rgba(255,255,255,0.08);padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo-box{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center}
+  .logo-box i{font-size:20px;color:#fff}
+  .logo-text{font-size:16px;font-weight:600;color:#f1f5f9}
+  .logo-sub{font-size:11px;color:#64748b}
+  .secure-badge{background:rgba(99,102,241,0.1);border:0.5px solid rgba(99,102,241,0.3);border-radius:20px;padding:5px 14px;color:#a5b4fc;font-size:12px;display:flex;align-items:center;gap:6px}
+  /* HERO */
+  .hero{padding:60px 24px 44px;text-align:center;background:radial-gradient(ellipse 70% 45% at 50% 0%,rgba(99,102,241,0.16) 0%,transparent 70%)}
+  .hero h1{font-size:34px;font-weight:700;color:#f1f5f9;line-height:1.25;margin-bottom:12px}
+  .hero h1 span{background:linear-gradient(90deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero p{color:#94a3b8;font-size:15px;max-width:460px;margin:0 auto 28px;line-height:1.7}
+  .hero-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .tag{background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.1);border-radius:20px;padding:6px 14px;color:#94a3b8;font-size:12px;display:inline-flex;align-items:center;gap:6px}
+  .tag i{font-size:13px;color:#818cf8}
+  /* MAIN WRAP */
+  .wrap{max-width:740px;margin:0 auto;padding:0 20px 80px}
+  /* STEP BAR */
+  .step-bar{display:flex;align-items:center;justify-content:center;gap:0;margin:36px 0 30px}
+  .stp{display:flex;flex-direction:column;align-items:center;gap:5px}
+  .stp-c{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.1);color:#475569;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;transition:all 0.3s}
+  .stp.on .stp-c{background:rgba(99,102,241,0.28);border-color:rgba(99,102,241,0.6);color:#a5b4fc}
+  .stp.ok .stp-c{background:rgba(34,197,94,0.2);border-color:rgba(34,197,94,0.5);color:#4ade80}
+  .stp-l{color:#475569;font-size:10px;white-space:nowrap;margin-top:2px}
+  .stp.on .stp-l{color:#818cf8}
+  .stp.ok .stp-l{color:#4ade80}
+  .stp-line{width:48px;height:0.5px;background:rgba(255,255,255,0.08);margin-bottom:17px}
+  /* GLASS CARD */
+  .gc{background:rgba(255,255,255,0.035);border:0.5px solid rgba(255,255,255,0.09);border-radius:20px;padding:28px;margin-bottom:16px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .sh{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+  .si{width:36px;height:36px;border-radius:10px;background:rgba(99,102,241,0.18);border:0.5px solid rgba(99,102,241,0.32);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .si i{font-size:17px;color:#818cf8}
+  .st-title{color:#e2e8f0;font-size:15px;font-weight:600}
+  /* GRID */
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .g1{display:grid;grid-template-columns:1fr;gap:14px}
+  /* FIELDS */
+  .f{display:flex;flex-direction:column;gap:7px}
+  .f label{color:#94a3b8;font-size:12px;font-weight:500;letter-spacing:0.02em}
+  .f label .r{color:#f87171;margin-left:2px}
+  .f input,.f select,.f textarea{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.11);border-radius:10px;color:#e2e8f0;font-size:13px;padding:11px 14px;outline:none;transition:border-color 0.2s,background 0.2s;font-family:inherit;width:100%}
+  .f input:focus,.f select:focus,.f textarea:focus{border-color:rgba(99,102,241,0.6);background:rgba(99,102,241,0.07)}
+  .f select option{background:#111827;color:#e2e8f0}
+  .f textarea{resize:vertical;min-height:90px;line-height:1.6}
+  .ph-row{display:flex;gap:8px}
+  .ph-row select{width:180px;flex-shrink:0}
+  .ph-row input{flex:1}
+  /* SERVICE CARDS */
+  .svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .svc-card{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.09);border-radius:13px;padding:16px 12px;cursor:pointer;transition:all 0.2s;text-align:center;user-select:none}
+  .svc-card:hover{background:rgba(99,102,241,0.09);border-color:rgba(99,102,241,0.3);transform:translateY(-1px)}
+  .svc-card.sel{background:rgba(99,102,241,0.16);border-color:rgba(99,102,241,0.6)}
+  .svc-card i{font-size:24px;color:#818cf8;display:block;margin-bottom:8px}
+  .svc-card .sn{color:#e2e8f0;font-size:13px;font-weight:600}
+  .svc-card .sd{color:#64748b;font-size:11px;margin-top:4px}
+  .svc-card.sel .sn{color:#a5b4fc}
+  /* PACKAGE */
+  .pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+  .pkg{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.09);border-radius:14px;padding:18px 14px;cursor:pointer;transition:all 0.2s;text-align:center;user-select:none}
+  .pkg:hover{border-color:rgba(99,102,241,0.35);transform:translateY(-1px)}
+  .pkg.sel{background:rgba(99,102,241,0.14);border-color:rgba(99,102,241,0.6)}
+  .pkg.featured{border-color:rgba(139,92,246,0.35);background:rgba(139,92,246,0.07)}
+  .pkg.featured.sel{border-color:rgba(139,92,246,0.7);background:rgba(139,92,246,0.15)}
+  .feat-badge{background:rgba(139,92,246,0.25);color:#c4b5fd;font-size:10px;padding:3px 10px;border-radius:10px;display:inline-block;margin-bottom:10px;font-weight:600}
+  .pkg-name{color:#e2e8f0;font-size:14px;font-weight:600;margin-bottom:6px}
+  .pkg-price{color:#818cf8;font-size:22px;font-weight:700}
+  .pkg-unit{color:#64748b;font-size:11px;margin-top:3px}
+  .pkg-features{color:#64748b;font-size:11px;margin-top:10px;line-height:1.7;text-align:left;padding-left:4px}
+  .pkg.sel .pkg-name{color:#a5b4fc}
+  /* URGENCY */
+  .urgency-row{display:flex;gap:10px}
+  .urg{flex:1;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.09);border-radius:12px;padding:14px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:10px;user-select:none}
+  .urg:hover{border-color:rgba(99,102,241,0.35)}
+  .urg.sel{background:rgba(99,102,241,0.13);border-color:rgba(99,102,241,0.6)}
+  .urg i{font-size:22px;color:#818cf8;flex-shrink:0}
+  .urg .un{color:#e2e8f0;font-size:13px;font-weight:600}
+  .urg .ud{color:#64748b;font-size:11px;margin-top:3px}
+  .urg.sel .un{color:#a5b4fc}
+  /* DAYS */
+  .days-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .day-opt{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.09);border-radius:8px;padding:8px 16px;cursor:pointer;color:#94a3b8;font-size:12px;transition:all 0.2s;user-select:none}
+  .day-opt:hover{border-color:rgba(99,102,241,0.35);color:#e2e8f0}
+  .day-opt.sel{background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.6);color:#a5b4fc}
+  /* ORDER SUMMARY */
+  .order-summary{background:rgba(99,102,241,0.07);border:0.5px solid rgba(99,102,241,0.2);border-radius:14px;padding:18px;margin-bottom:18px}
+  .os-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)}
+  .os-row:last-child{border-bottom:none;padding-top:12px;margin-top:4px}
+  .os-row .k{color:#94a3b8;font-size:12px}
+  .os-row .v{color:#e2e8f0;font-size:12px;font-weight:500;text-align:right;max-width:60%;word-break:break-word}
+  .os-row .total-k{color:#a5b4fc;font-size:14px;font-weight:600}
+  .os-row .total-v{color:#c084fc;font-size:18px;font-weight:700}
+  /* AGREE */
+  .ag-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+  .ag-row input[type=checkbox]{width:16px;height:16px;accent-color:#6366f1;margin-top:2px;flex-shrink:0;cursor:pointer}
+  .ag-row label{color:#94a3b8;font-size:12px;line-height:1.6;cursor:pointer}
+  .ag-row a{color:#818cf8;text-decoration:none}
+  .ag-row a:hover{text-decoration:underline}
+  /* ERROR */
+  .err-box{color:#f87171;font-size:12px;margin-bottom:14px;display:none;align-items:center;gap:6px;background:rgba(248,113,113,0.08);border:0.5px solid rgba(248,113,113,0.25);border-radius:8px;padding:10px 12px}
+  .err-box i{font-size:15px;flex-shrink:0}
+  /* SUBMIT BUTTON */
+  .submit-btn{width:100%;border:none;border-radius:12px;padding:15px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;transition:all 0.2s;letter-spacing:0.02em}
+  .submit-btn:hover{opacity:0.88;transform:translateY(-1px)}
+  .submit-btn:active{transform:scale(0.99)}
+  /* SUCCESS */
+  .success-wrap{display:none;text-align:center;padding:52px 24px}
+  .s-circle{width:84px;height:84px;border-radius:50%;background:rgba(34,197,94,0.12);border:1.5px solid rgba(34,197,94,0.35);display:flex;align-items:center;justify-content:center;margin:0 auto 22px}
+  .s-circle i{font-size:40px;color:#4ade80}
+  .success-wrap h2{color:#f1f5f9;font-size:24px;font-weight:700;margin-bottom:10px}
+  .success-wrap p{color:#94a3b8;font-size:14px;margin-bottom:22px;line-height:1.7;max-width:400px;margin-left:auto;margin-right:auto}
+  .ref-pill{background:rgba(99,102,241,0.13);border:0.5px solid rgba(99,102,241,0.35);border-radius:14px;padding:14px 32px;display:inline-block;margin-bottom:16px}
+  .ref-pill span{color:#a5b4fc;font-size:16px;font-weight:700;letter-spacing:0.1em}
+  .order-details-box{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px 20px;text-align:left;max-width:420px;margin:16px auto 0}
+  .od-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid rgba(255,255,255,0.05);font-size:12px}
+  .od-row:last-child{border-bottom:none}
+  .od-row .ok{color:#64748b}
+  .od-row .ov{color:#e2e8f0;font-weight:500}
+  /* FOOTER */
+  .footer{text-align:center;padding:20px;color:#1e293b;font-size:12px;border-top:0.5px solid rgba(255,255,255,0.05)}
+  /* RESPONSIVE */
+  @media(max-width:600px){
+    .g2{grid-template-columns:1fr}
+    .pkg-grid{grid-template-columns:1fr}
+    .ph-row{flex-direction:column}
+    .ph-row select{width:100%}
+    .urgency-row{flex-direction:column}
+    .hero h1{font-size:24px}
+    .topbar{padding:12px 16px}
+    .wrap{padding:0 14px 60px}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-box"><i class="ti ti-books"></i></div>
+    <div>
+      <div class="logo-text">ScholarPro Services</div>
+      <div class="logo-sub">International Academic Portal</div>
+    </div>
+  </div>
+  <div class="secure-badge"><i class="ti ti-lock"></i> Secure & Trusted</div>
+</div>
+
+<div class="hero">
+  <h1>Get Your <span>Academic Documents</span><br>Done by Experts</h1>
+  <p>CV, SOP, LOR, Cover Letter & more — crafted by professionals for international scholarship applications worldwide.</p>
+  <div class="hero-tags">
+    <span class="tag"><i class="ti ti-world"></i>195+ Countries</span>
+    <span class="tag"><i class="ti ti-clock"></i>Fast Delivery</span>
+    <span class="tag"><i class="ti ti-star"></i>Expert Writers</span>
+    <span class="tag"><i class="ti ti-shield-check"></i>100% Original</span>
+    <span class="tag"><i class="ti ti-refresh"></i>Free Revisions</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="step-bar">
+    <div class="stp on" id="stp1"><div class="stp-c">1</div><div class="stp-l">Your Info</div></div>
+    <div class="stp-line"></div>
+    <div class="stp" id="stp2"><div class="stp-c">2</div><div class="stp-l">Services</div></div>
+    <div class="stp-line"></div>
+    <div class="stp" id="stp3"><div class="stp-c">3</div><div class="stp-l">Package</div></div>
+    <div class="stp-line"></div>
+    <div class="stp" id="stp4"><div class="stp-c">4</div><div class="stp-l">Payment</div></div>
+  </div>
+
+  <div id="main-form">
+
+    <!-- STUDENT INFO -->
+    <div class="gc">
+      <div class="sh">
+        <div class="si"><i class="ti ti-user"></i></div>
+        <span class="st-title">Student Information</span>
+      </div>
+      <div class="g2">
+        <div class="f">
+          <label>Full Name <span class="r">*</span></label>
+          <input type="text" id="fname" placeholder="Your full name">
+        </div>
+        <div class="f">
+          <label>Country <span class="r">*</span></label>
+          <select id="country"><option value="">Select your country</option></select>
+        </div>
+        <div class="f">
+          <label>Education Level <span class="r">*</span></label>
+          <select id="edu">
+            <option value="">Select level</option>
+            <option>High School / A-Levels</option>
+            <option>Undergraduate (Bachelor's)</option>
+            <option>Postgraduate (Master's)</option>
+            <option>Doctoral (PhD)</option>
+            <option>Diploma / Certificate</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="f">
+          <label>Scholarship Applying For <span class="r">*</span></label>
+          <input type="text" id="scholarship" placeholder="e.g. Chevening, Fulbright, DAAD">
+        </div>
+        <div class="f" style="grid-column:1/-1">
+          <label>WhatsApp / Contact Number <span class="r">*</span></label>
+          <div class="ph-row">
+            <select id="dialcode"><option value="">+code</option></select>
+            <input type="tel" id="phone" placeholder="Your phone number">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="gc">
+      <div class="sh">
+        <div class="si"><i class="ti ti-files"></i></div>
+        <span class="st-title">Select Services Needed</span>
+      </div>
+      <p style="color:#64748b;font-size:12px;margin-bottom:14px">Click to select one or more services you need:</p>
+      <div class="svc-grid">
+        <div class="svc-card" data-svc="CV / Resume" onclick="toggleSvc(this)">
+          <i class="ti ti-id-badge"></i>
+          <div class="sn">CV / Resume</div>
+          <div class="sd">Professional format</div>
+        </div>
+        <div class="svc-card" data-svc="SOP" onclick="toggleSvc(this)">
+          <i class="ti ti-writing"></i>
+          <div class="sn">SOP</div>
+          <div class="sd">Statement of Purpose</div>
+        </div>
+        <div class="svc-card" data-svc="LOR" onclick="toggleSvc(this)">
+          <i class="ti ti-mail-forward"></i>
+          <div class="sn">LOR</div>
+          <div class="sd">Letter of Recommendation</div>
+        </div>
+        <div class="svc-card" data-svc="Personal Statement" onclick="toggleSvc(this)">
+          <i class="ti ti-pencil"></i>
+          <div class="sn">Personal Statement</div>
+          <div class="sd">Your unique story</div>
+        </div>
+        <div class="svc-card" data-svc="Cover Letter" onclick="toggleSvc(this)">
+          <i class="ti ti-mail"></i>
+          <div class="sn">Cover Letter</div>
+          <div class="sd">For applications</div>
+        </div>
+        <div class="svc-card" data-svc="Scholarship Application" onclick="toggleSvc(this)">
+          <i class="ti ti-award"></i>
+          <div class="sn">Scholarship App</div>
+          <div class="sd">Full application help</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELIVERY -->
+    <div class="gc">
+      <div class="sh">
+        <div class="si"><i class="ti ti-clock"></i></div>
+        <span class="st-title">Delivery Preference</span>
+      </div>
+      <div class="f" style="margin-bottom:12px"><label>Urgency <span class="r">*</span></label></div>
+      <div class="urgency-row">
+        <div class="urg" id="urg-normal" onclick="setUrg('normal')">
+          <i class="ti ti-leaf"></i>
+          <div><div class="un">Normal</div><div class="ud">5–7 business days</div></div>
+        </div>
+        <div class="urg" id="urg-urgent" onclick="setUrg('urgent')">
+          <i class="ti ti-bolt"></i>
+          <div><div class="un">Urgent</div><div class="ud">1–3 business days</div></div>
+        </div>
+      </div>
+      <div class="f" style="margin-top:18px;margin-bottom:8px"><label>Specific Days Required</label></div>
+      <div class="days-row">
+        <div class="day-opt" onclick="toggleDay(this)">1 day</div>
+        <div class="day-opt" onclick="toggleDay(this)">2 days</div>
+        <div class="day-opt" onclick="toggleDay(this)">3 days</div>
+        <div class="day-opt" onclick="toggleDay(this)">5 days</div>
+        <div class="day-opt" onclick="toggleDay(this)">7 days</div>
+        <div class="day-opt" onclick="toggleDay(this)">10 days</div>
+        <div class="day-opt" onclick="toggleDay(this)">14 days</div>
+        <div class="day-opt" onclick="toggleDay(this)">Custom</div>
+      </div>
+      <div class="f" style="margin-top:12px;display:none" id="custom-day-wrap">
+        <label>Enter number of days</label>
+        <input type="number" id="custom-days" placeholder="e.g. 4" min="1" max="60" style="max-width:180px">
+      </div>
+      <div class="f" style="margin-top:18px">
+        <label>Additional Notes / Special Requirements</label>
+        <textarea id="notes" placeholder="University name, word count, specific format, any other instructions..."></textarea>
+      </div>
+    </div>
+
+    <!-- PACKAGE -->
+    <div class="gc">
+      <div class="sh">
+        <div class="si"><i class="ti ti-package"></i></div>
+        <span class="st-title">Choose Your Package</span>
+      </div>
+      <div class="pkg-grid">
+        <div class="pkg" id="pkg-basic" onclick="setPkg('basic',15)">
+          <div class="pkg-name">Basic</div>
+          <div class="pkg-price">$15</div>
+          <div class="pkg-unit">per document</div>
+          <div class="pkg-features">✓ 1 revision<br>✓ Standard quality<br>✓ Email delivery<br>✓ 5–7 day turnaround</div>
+        </div>
+        <div class="pkg featured" id="pkg-standard" onclick="setPkg('standard',30)">
+          <div class="feat-badge">Most Popular</div>
+          <div class="pkg-name">Standard</div>
+          <div class="pkg-price">$30</div>
+          <div class="pkg-unit">per document</div>
+          <div class="pkg-features">✓ 3 revisions<br>✓ Premium quality<br>✓ WhatsApp support<br>✓ 3–5 day turnaround</div>
+        </div>
+        <div class="pkg" id="pkg-premium" onclick="setPkg('premium',50)">
+          <div class="pkg-name">Premium</div>
+          <div class="pkg-price">$50</div>
+          <div class="pkg-unit">per document</div>
+          <div class="pkg-features">✓ Unlimited revisions<br>✓ Expert senior writer<br>✓ Priority support<br>✓ 1–2 day turnaround</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="gc">
+      <div class="sh">
+        <div class="si"><i class="ti ti-credit-card"></i></div>
+        <span class="st-title">Order Summary & Payment</span>
+      </div>
+      <div class="order-summary">
+        <div class="os-row"><span class="k">Services selected</span><span class="v" id="os-svcs">—</span></div>
+        <div class="os-row"><span class="k">Package</span><span class="v" id="os-pkg">—</span></div>
+        <div class="os-row"><span class="k">Delivery</span><span class="v" id="os-del">—</span></div>
+        <div class="os-row"><span class="k">No. of documents</span><span class="v" id="os-count">0</span></div>
+        <div class="os-row">
+          <span class="total-k">Total Estimate</span>
+          <span class="total-v" id="os-total">$0</span>
+        </div>
+      </div>
+      <div class="f" style="margin-bottom:18px">
+        <label>Payment Method <span class="r">*</span></label>
+        <select id="payment">
+          <option value="">Select payment method</option>
+          <option>Bank Transfer (International / SWIFT)</option>
+          <option>PayPal</option>
+          <option>Wise (TransferWise)</option>
+          <option>Western Union</option>
+          <option>Crypto — USDT (TRC20)</option>
+          <option>Crypto — Bitcoin (BTC)</option>
+          <option>JazzCash (Pakistan)</option>
+          <option>EasyPaisa (Pakistan)</option>
+        </select>
+      </div>
+      <div class="ag-row">
+        <input type="checkbox" id="ag1">
+        <label for="ag1">I confirm that all information I have provided is accurate. I understand that any incorrect information may affect my document quality.</label>
+      </div>
+      <div class="ag-row">
+        <input type="checkbox" id="ag2">
+        <label for="ag2">I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Refund Policy</a> of ScholarPro Services.</label>
+      </div>
+      <div class="err-box" id="err-box"><i class="ti ti-alert-circle"></i><span id="err-txt"></span></div>
+      <button class="submit-btn" onclick="doSubmit()">
+        <i class="ti ti-send"></i> Confirm & Place Order
+      </button>
+    </div>
+
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-wrap gc" id="success-box">
+    <div class="s-circle"><i class="ti ti-check"></i></div>
+    <h2>Order Placed Successfully!</h2>
+    <p>Thank you! Our expert team will contact you on WhatsApp within 2 hours to confirm your order and share payment details.</p>
+    <div class="ref-pill"><span id="ref-id">SPO-2025-00000</span></div>
+    <div class="order-details-box" id="order-details-box"></div>
+    <p style="margin-top:16px;color:#475569;font-size:11px">Save your Order ID above for tracking your request.</p>
+  </div>
+
+</div>
+
+<div class="footer">© 2025 ScholarPro Services &nbsp;·&nbsp; International Academic Writing Portal &nbsp;·&nbsp; All Rights Reserved</div>
+
+<script>
+const countries=[["Afghanistan","+93"],["Albania","+355"],["Algeria","+213"],["Andorra","+376"],["Angola","+244"],["Antigua and Barbuda","+1-268"],["Argentina","+54"],["Armenia","+374"],["Australia","+61"],["Austria","+43"],["Azerbaijan","+994"],["Bahamas","+1-242"],["Bahrain","+973"],["Bangladesh","+880"],["Barbados","+1-246"],["Belarus","+375"],["Belgium","+32"],["Belize","+501"],["Benin","+229"],["Bhutan","+975"],["Bolivia","+591"],["Bosnia and Herzegovina","+387"],["Botswana","+267"],["Brazil","+55"],["Brunei","+673"],["Bulgaria","+359"],["Burkina Faso","+226"],["Burundi","+257"],["Cabo Verde","+238"],["Cambodia","+855"],["Cameroon","+237"],["Canada","+1"],["Central African Republic","+236"],["Chad","+235"],["Chile","+56"],["China","+86"],["Colombia","+57"],["Comoros","+269"],["Congo DRC","+243"],["Congo Republic","+242"],["Costa Rica","+506"],["Croatia","+385"],["Cuba","+53"],["Cyprus","+357"],["Czech Republic","+420"],["Denmark","+45"],["Djibouti","+253"],["Dominican Republic","+1-809"],["Ecuador","+593"],["Egypt","+20"],["El Salvador","+503"],["Equatorial Guinea","+240"],["Eritrea","+291"],["Estonia","+372"],["Eswatini","+268"],["Ethiopia","+251"],["Fiji","+679"],["Finland","+358"],["France","+33"],["Gabon","+241"],["Gambia","+220"],["Georgia","+995"],["Germany","+49"],["Ghana","+233"],["Greece","+30"],["Grenada","+1-473"],["Guatemala","+502"],["Guinea","+224"],["Guinea-Bissau","+245"],["Guyana","+592"],["Haiti","+509"],["Honduras","+504"],["Hungary","+36"],["Iceland","+354"],["India","+91"],["Indonesia","+62"],["Iran","+98"],["Iraq","+964"],["Ireland","+353"],["Israel","+972"],["Italy","+39"],["Jamaica","+1-876"],["Japan","+81"],["Jordan","+962"],["Kazakhstan","+7"],["Kenya","+254"],["Kiribati","+686"],["Kuwait","+965"],["Kyrgyzstan","+996"],["Laos","+856"],["Latvia","+371"],["Lebanon","+961"],["Lesotho","+266"],["Liberia","+231"],["Libya","+218"],["Liechtenstein","+423"],["Lithuania","+370"],["Luxembourg","+352"],["Madagascar","+261"],["Malawi","+265"],["Malaysia","+60"],["Maldives","+960"],["Mali","+223"],["Malta","+356"],["Marshall Islands","+692"],["Mauritania","+222"],["Mauritius","+230"],["Mexico","+52"],["Micronesia","+691"],["Moldova","+373"],["Monaco","+377"],["Mongolia","+976"],["Montenegro","+382"],["Morocco","+212"],["Mozambique","+258"],["Myanmar","+95"],["Namibia","+264"],["Nauru","+674"],["Nepal","+977"],["Netherlands","+31"],["New Zealand","+64"],["Nicaragua","+505"],["Niger","+227"],["Nigeria","+234"],["North Korea","+850"],["North Macedonia","+389"],["Norway","+47"],["Oman","+968"],["Pakistan","+92"],["Palau","+680"],["Palestine","+970"],["Panama","+507"],["Papua New Guinea","+675"],["Paraguay","+595"],["Peru","+51"],["Philippines","+63"],["Poland","+48"],["Portugal","+351"],["Qatar","+974"],["Romania","+40"],["Russia","+7"],["Rwanda","+250"],["Saint Kitts and Nevis","+1-869"],["Saint Lucia","+1-758"],["Saint Vincent","+1-784"],["Samoa","+685"],["San Marino","+378"],["Sao Tome and Principe","+239"],["Saudi Arabia","+966"],["Senegal","+221"],["Serbia","+381"],["Seychelles","+248"],["Sierra Leone","+232"],["Singapore","+65"],["Slovakia","+421"],["Slovenia","+386"],["Solomon Islands","+677"],["Somalia","+252"],["South Africa","+27"],["South Korea","+82"],["South Sudan","+211"],["Spain","+34"],["Sri Lanka","+94"],["Sudan","+249"],["Suriname","+597"],["Sweden","+46"],["Switzerland","+41"],["Syria","+963"],["Taiwan","+886"],["Tajikistan","+992"],["Tanzania","+255"],["Thailand","+66"],["Timor-Leste","+670"],["Togo","+228"],["Tonga","+676"],["Trinidad and Tobago","+1-868"],["Tunisia","+216"],["Turkey","+90"],["Turkmenistan","+993"],["Tuvalu","+688"],["Uganda","+256"],["Ukraine","+380"],["United Arab Emirates","+971"],["United Kingdom","+44"],["United States","+1"],["Uruguay","+598"],["Uzbekistan","+998"],["Vanuatu","+678"],["Vatican City","+379"],["Venezuela","+58"],["Vietnam","+84"],["Yemen","+967"],["Zambia","+260"],["Zimbabwe","+263"]];
+
+const cSel=document.getElementById('country');
+const dcSel=document.getElementById('dialcode');
+countries.forEach(([n,c])=>{
+  const o=document.createElement('option');o.value=n;o.textContent=n;cSel.appendChild(o);
+  const d=document.createElement('option');d.value=c;d.textContent=n+' ('+c+')';dcSel.appendChild(d);
+});
+
+let selSvcs=[],selPkg=null,selPkgPrice=0,selUrg=null,selDay=null;
+
+function toggleSvc(el){
+  const s=el.dataset.svc;
+  if(el.classList.contains('sel')){el.classList.remove('sel');selSvcs=selSvcs.filter(x=>x!==s);}
+  else{el.classList.add('sel');selSvcs.push(s);}
+  updateSummary();
+}
+function setPkg(id,price){
+  ['basic','standard','premium'].forEach(p=>document.getElementById('pkg-'+p).classList.remove('sel'));
+  document.getElementById('pkg-'+id).classList.add('sel');
+  selPkg=id.charAt(0).toUpperCase()+id.slice(1);
+  selPkgPrice=price;
+  updateSummary();
+}
+function setUrg(type){
+  document.getElementById('urg-normal').classList.remove('sel');
+  document.getElementById('urg-urgent').classList.remove('sel');
+  document.getElementById('urg-'+type).classList.add('sel');
+  selUrg=type;
+  updateSummary();
+}
+function toggleDay(el){
+  document.querySelectorAll('.day-opt').forEach(d=>d.classList.remove('sel'));
+  el.classList.add('sel');selDay=el.textContent;
+  document.getElementById('custom-day-wrap').style.display=el.textContent==='Custom'?'flex':'none';
+  updateSummary();
+}
+function updateSummary(){
+  document.getElementById('os-svcs').textContent=selSvcs.length?selSvcs.join(', '):'—';
+  document.getElementById('os-pkg').textContent=selPkg?selPkg+' ($'+selPkgPrice+' per doc)':'—';
+  const urgText=selUrg?(selUrg==='urgent'?'Urgent (1–3 days)':'Normal (5–7 days)'):'—';
+  document.getElementById('os-del').textContent=selDay?urgText+' / '+selDay:urgText;
+  const count=selSvcs.length;
+  document.getElementById('os-count').textContent=count;
+  const total=count&&selPkgPrice?count*selPkgPrice:0;
+  document.getElementById('os-total').textContent=total?'$'+total:'$0';
+  if(selSvcs.length)document.getElementById('stp2').classList.add('ok');
+  if(selPkg)document.getElementById('stp3').classList.add('ok');
+  document.getElementById('stp4').classList.add('on');
+}
+function showErr(msg){
+  const b=document.getElementById('err-box');
+  b.style.display='flex';
+  document.getElementById('err-txt').textContent=msg;
+}
+function doSubmit(){
+  if(!document.getElementById('fname').value.trim()){showErr('Please enter your full name.');return;}
+  if(!document.getElementById('country').value){showErr('Please select your country.');return;}
+  if(!document.getElementById('edu').value){showErr('Please select your education level.');return;}
+  if(!document.getElementById('scholarship').value.trim()){showErr('Please enter the scholarship name.');return;}
+  if(!document.getElementById('dialcode').value||!document.getElementById('phone').value.trim()){showErr('Please enter your WhatsApp number with country code.');return;}
+  if(!selSvcs.length){showErr('Please select at least one service.');return;}
+  if(!selUrg){showErr('Please select your delivery urgency (Normal or Urgent).');return;}
+  if(!selPkg){showErr('Please choose a package (Basic, Standard, or Premium).');return;}
+  if(!document.getElementById('payment').value){showErr('Please select a payment method.');return;}
+  if(!document.getElementById('ag1').checked){showErr('Please confirm that your information is accurate.');return;}
+  if(!document.getElementById('ag2').checked){showErr('Please agree to the Terms & Conditions.');return;}
+
+  document.getElementById('main-form').style.display='none';
+  const ref='SPO-2025-'+Math.floor(10000+Math.random()*90000);
+  document.getElementById('ref-id').textContent=ref;
+
+  const count=selSvcs.length;
+  const total=count*selPkgPrice;
+  document.getElementById('order-details-box').innerHTML=
+    '<div class="od-row"><span class="ok">Student</span><span class="ov">'+document.getElementById('fname').value+'</span></div>'+
+    '<div class="od-row"><span class="ok">Services</span><span class="ov">'+selSvcs.join(', ')+'</span></div>'+
+    '<div class="od-row"><span class="ok">Package</span><span class="ov">'+selPkg+'</span></div>'+
+    '<div class="od-row"><span class="ok">Delivery</span><span class="ov">'+(selUrg==='urgent'?'Urgent':'Normal')+'</span></div>'+
+    '<div class="od-row"><span class="ok">Payment</span><span class="ov">'+document.getElementById('payment').value+'</span></div>'+
+    '<div class="od-row"><span class="ok">Total</span><span class="ov" style="color:#a5b4fc;font-weight:700">$'+total+'</span></div>';
+
+  document.getElementById('success-box').style.display='block';
+  ['stp1','stp2','stp3','stp4'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.classList.remove('on');
+    el.classList.add('ok');
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
